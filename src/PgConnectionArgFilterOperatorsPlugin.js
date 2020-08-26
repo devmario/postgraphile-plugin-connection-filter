@@ -46,7 +46,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
                 resolveType: () => GraphQLString,
                 resolveSqlValue: input => input,
                 resolve: (i, v) => {
-                    return sql.query`${i}${sql.raw(v)}`;
+                    return sql.query`(${i}${sql.raw(v)})`;
                 }
             },
             isNull: {
@@ -706,7 +706,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         for (const fieldName of Object.keys(operatorFields)) {
             connectionFilterRegisterResolver(Self.name, fieldName, resolve);
         }
-
+        
         return extend(fields, operatorFields);
     });
 };
